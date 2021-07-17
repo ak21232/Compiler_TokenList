@@ -4,6 +4,8 @@ const std::vector<std::string> identifiers{"null"};
 
 std::vector<std::string> readFile(std::string fileName);
 
+std::vector<std::string> readFileLine(std::string fileName);
+
 std::vector<std::string> categorizeKeyWords(std::vector<std::string> list);
 
 std::vector<std::string> categorizeIdentifiers(std::vector<std::string> list);
