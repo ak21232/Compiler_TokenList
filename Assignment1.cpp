@@ -4,7 +4,7 @@
 
 int main(){
   std::vector<std::string> list = readFileLine("SampleInputFile-2021.txt");
-  std::vector<std::string> words = categorizeKeyWords(list);
+  std::vector<std::string> words = removeComments(list);
   for(int i = 0; i < list.size(); i++ ){
     std::cout << list[i] << '\n';
   }

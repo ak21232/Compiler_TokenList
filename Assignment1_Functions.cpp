@@ -3,20 +3,7 @@
 #include <string>
 #include <vector>
 
-// Function that reads the input command
-std::vector<std::string> readFile(std::string fileName)
-{
-  std::vector<std::string> wordList;
-  std::string word;
-  std::fstream file;
-  file.open(fileName);
-  while (file >> word) {
-    wordList.push_back(word);
-  }
-  file.close();
-  return wordList;
-}
-
+// Function that reads the code inputted
 std::vector<std::string> readFileLine(std::string fileName)
 {
   std::vector<std::string> wordList;
@@ -34,24 +21,20 @@ std::vector<std::string> readFileLine(std::string fileName)
 
 // Function that categorizes what is read from the input list
 // into their respective lexeme type
-std::vector<std::string> categorizeKeyWords(std::vector<std::string> list){
-
-  std::vector<std::string> wordsList;
-  for(int i = 0; i < list.size(); i++ ){
-    if (list[i].find("!") == std::string::npos){
+std::vector<std::string> removeComments(std::vector<std::string> wordlist){
+  std::vector<std::string> wordListNoComments;
+  for(int i = 0; i < wordlist.size(); i++ ){
+    if (wordlist[i].find("!") == std::string::npos){
       std::string word;
-      for(int j = 0; j < list[i].length(); j++){
-        if (list[i].at(j) == ' '){
-          break;
-        }
-        else {
-          word += list[i].at(j);
+      for(int j = 0; j < wordlist[i].length(); j++){
+        if (wordlist[i].at(j) != ' '){
+          word += wordlist[i].at(j);
         }
       }
-      wordsList.push_back(word);
+      wordListNoComments.push_back(word);
     }
   }
-  return wordsList;
+  return wordListNoComments;
 }
 
 std::vector<std::string> categorizeIdentifiers(std::vector<std::string> list);
