@@ -37,6 +37,8 @@ std::vector<std::string> removeComments(std::vector<std::string> wordlist){
   return wordListNoComments;
 }
 
+
+
 std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoComments){
   std::vector<std::string> wordListNoSep;
   std::vector<char> separatorsList;
@@ -52,41 +54,70 @@ std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoCom
     }
     wordListNoSep.push_back(word);
   }
-  }
   return wordListNoSep;
 }
 
-std::vector<std::string> categorizeSeparators(std::vector<std::string> list){
-  const std::vector<std::string> separators{"(", ")", "{", "}", "[", "]",
-                                            ",", ".", ":", ";", "'"};
-                                            // const std::vector<std::string> keyWords{
-                                            //     "int",  "float",  "bool",     "True",      "False",    "if", "else",
-                                            //     "then", "endif",  "endelse",  "while",     "whileend", "do", "enddo",
-                                            //     "for",  "endfor", "STDinput", "STDoutput", "and",      "or", "not"};
-                                            // const std::vector<std::string> separators{"(", ")", "{", "}", "[", "]",
-                                            //                                               ",", ".", ":", ";", "'"};
-  std::vector<std::string> words;
-  for(int i = 0; i < list.size(); i++ ){
-    for(int j = 0; j < separators.size(); j++ ){
-      if (list[i].find(separators[j])){
-        words.push_back(separators[j]);
-        words.push_back(list[i].substr(0,list[i].size() -1));
+std::vector<std::string> removeOperators(std::vector<std::string> wordListNoSep){
+  std::vector<std::string> wordListNoOps;
+  std::vector<char> operatorsList;
+  for(int i = 0; i < wordListNoSep.size(); i++){
+    std::string word;
+    for(int j = 0; j < wordListNoSep[i].length(); j++){
+      if (wordListNoSep[i].at(j) != '+' && wordListNoSep[i].at(j) != '-' && wordListNoSep[i].at(j) != '=' && wordListNoSep[i].at(j) != '*' && wordListNoSep[i].at(j) != '/' && wordListNoSep[i].at(j) != '>' && wordListNoSep[i].at(j) != '<' && wordListNoSep[i].at(j) != '%' ){
+        word += wordListNoSep[i].at(j);
+      }
+      else {
+        operatorsList.push_back(wordListNoSep[i].at(j));
       }
     }
+    wordListNoOps.push_back(word);
   }
-  return words;
+  return wordListNoOps;
 }
 
-std::vector<std::string> categorizeOperators(std::vector<std::string> list){
-  const std::vector<std::string> operators{"*", "+", "-", "=",
-                                           "/", ">", "<", "%"};
-  std::vector<std::string> words;
-  for(int i = 0; i < list.size(); i++ ){
-    for(int j = 0; j < operators.size(); j++ ){
-      if (list[i] == operators[j]){
-        words.push_back(operators[j]);
+std::vector<std::string> getKeyWords(std::vector<std::string> wordListNoOps){
+  std::vector<std::string> identifiers;
+  std::vector<std::string> keywordList;
+  for(int i = 0; i < wordListNoOps.size(); i++){
+    std::string word;
+    for(int j = 0; j < wordListNoOps[i].length(); j++){
+      word += wordListNoOps[i].at(j);
+      if (word == "int" || word == "float" || word == "bool" || word == "True" || word == "False" || word == "if" || word == "else" || word == "then" || word == "endif" || word == "endelse" || word == "while" || word == "whileend" || word == "do" || word == "enddo" || word == "for" || word == "endfor" || word == "STDinput" || word == "STDoutput" || word == "and" || word == "or"|| word == "not" ){
+        keywordList.push_back(word);
+
       }
     }
   }
-  return words;
+  return keywordList;
+}
+
+std::vector<std::string> removeSpace(std::vector<std::string> wordList){
+  std::vector<std::string> identifiersList;
+  std::vector<std::string> keywordList;
+  std::vector<std::string> separatorsList;
+  std::vector<std::string> operatorsList;
+  for(int i = 0; i < wordList.size(); i++ ){
+    std::string word;
+    for(int j = 0; j < wordList[i].length(); j++){
+      word += wordList[i].at(j);
+      if (word == "int" || word == "float" || word == "bool" || word == "True" || word == "False" || word == "if" || word == "else" || word == "then" || word == "endif" || word == "endelse" || word == "while" || word == "whileend" || word == "do" || word == "enddo" || word == "for" || word == "endfor" || word == "STDinput" || word == "STDoutput" || word == "and" || word == "or"|| word == "not" ){
+        keywordList.push_back(word);
+        word.erase(0,word.at(j));
+      }
+      if(wordList[i].at(j) == '(' || wordList[i].at(j) == ')' || wordList[i].at(j) == '{' || wordList[i].at(j) == '}' || wordList[i].at(j) == '[' || wordList[i].at(j) == ']' || wordList[i].at(j) == ',' || wordList[i].at(j) == '.' || wordList[i].at(j) == ';' || wordList[i].at(j) == ':' || wordList[i].at(j) == '\''){
+        std::string sep;
+        sep += wordList[i].at(j);
+        separatorsList.push_back(sep);
+        word.erase(word.find(sep));
+      }
+      if (wordList[i].at(j) == '+' || wordList[i].at(j) == '-' || wordList[i].at(j) == '=' || wordList[i].at(j) == '*' || wordList[i].at(j) == '/' || wordList[i].at(j) == '>' || wordList[i].at(j) == '<' || wordList[i].at(j) == '%' ){
+        std::string op;
+        op += wordList[i].at(j);
+        operatorsList.push_back(op);
+        word.erase(word.find(op));
+      }
+    }
+    identifiersList.push_back(word);
+  }
+  return identifiersList;
 }

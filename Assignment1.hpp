@@ -8,6 +8,6 @@ std::vector<std::string> removeComments(std::vector<std::string> wordListNoComme
 
 std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoComments);
 
-std::vector<std::string> categorizeSeparators(std::vector<std::string> list);
+std::vector<std::string> removeOperators(std::vector<std::string> wordListNoSep);
 
-std::vector<std::string> categorizeOperators(std::vector<std::string> list);
+std::vector<std::string> removeSpace(std::vector<std::string> wordlist);
