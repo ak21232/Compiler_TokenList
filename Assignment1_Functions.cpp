@@ -37,11 +37,24 @@ std::vector<std::string> removeComments(std::vector<std::string> wordlist){
   return wordListNoComments;
 }
 
-// std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoComments){
-//   std::vector<std::string> wordListNoSep;
-//   for(int i = 0; i < )
-//
-// }
+std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoComments){
+  std::vector<std::string> wordListNoSep;
+  std::vector<char> separatorsList;
+  for(int i = 0; i < wordListNoComments.size(); i++){
+    std::string word;
+    for(int j = 0; j < wordListNoComments[i].length(); j++){
+      if (wordListNoComments[i].at(j) != '(' && wordListNoComments[i].at(j) != ')' && wordListNoComments[i].at(j) != '{' && wordListNoComments[i].at(j) != '}' && wordListNoComments[i].at(j) != '[' && wordListNoComments[i].at(j) != ']' && wordListNoComments[i].at(j) != ',' && wordListNoComments[i].at(j) != '.' && wordListNoComments[i].at(j) != ';' && wordListNoComments[i].at(j) != ':' && wordListNoComments[i].at(j) != '\''  ){
+        word += wordListNoComments[i].at(j);
+      }
+      else {
+        separatorsList.push_back(wordListNoComments[i].at(j));
+      }
+    }
+    wordListNoSep.push_back(word);
+  }
+  }
+  return wordListNoSep;
+}
 
 std::vector<std::string> categorizeSeparators(std::vector<std::string> list){
   const std::vector<std::string> separators{"(", ")", "{", "}", "[", "]",
