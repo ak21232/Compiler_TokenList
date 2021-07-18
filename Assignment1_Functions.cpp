@@ -27,7 +27,7 @@ std::vector<std::string> removeComments(std::vector<std::string> wordlist){
     if (wordlist[i].find("!") == std::string::npos){
       std::string word;
       for(int j = 0; j < wordlist[i].length(); j++){
-        if (wordlist[i].at(j) != ' '){
+        if (wordlist[i].at(j) != ' ' && wordlist[i].at(j) != '\t'){
           word += wordlist[i].at(j);
         }
       }
@@ -37,7 +37,11 @@ std::vector<std::string> removeComments(std::vector<std::string> wordlist){
   return wordListNoComments;
 }
 
-std::vector<std::string> categorizeIdentifiers(std::vector<std::string> list);
+// std::vector<std::string> removeSeparators(std::vector<std::string> wordListNoComments){
+//   std::vector<std::string> wordListNoSep;
+//   for(int i = 0; i < )
+//
+// }
 
 std::vector<std::string> categorizeSeparators(std::vector<std::string> list){
   const std::vector<std::string> separators{"(", ")", "{", "}", "[", "]",
