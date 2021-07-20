@@ -36,7 +36,7 @@ std::vector<std::string> removeComments(std::vector<std::string> wordlist) {
 }
 
 
-std::vector<std::string> removeSpace(std::vector<std::string> wordList) {
+std::vector<std::string> tokenRetrieval(std::vector<std::string> wordList, std::string returnType) {
   std::vector<std::string> identifiersListInitial;
   std::vector<std::string> identifiersListFinal;
   std::vector<std::string> keywordList;
@@ -94,5 +94,19 @@ std::vector<std::string> removeSpace(std::vector<std::string> wordList) {
     }
     identifiersListFinal.push_back(word2);
   }
-  return identifiersListFinal;
+  if (returnType == "Identifiers"){
+    return identifiersListFinal;
+  }
+  else if (returnType == "Operators"){
+    return operatorsList;
+  }
+  else if (returnType == "Separators"){
+    return separatorsList;
+  }
+  else if (returnType == "KeyWords"){
+    return keywordList;
+  }
+  else{
+    return wordList;
+  }
 }
